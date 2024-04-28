@@ -2,18 +2,24 @@ import { StyleSheet, Text, TextInput, View } from "react-native";
 import React from "react";
 import CustomButton from "../components/CustomButton";
 
-export default function GameStartScreen() {
+export default function GameStartScreen({ onPress }) {
+  function resetHandler() {}
+  function confirmHandler() {}
   return (
     <View style={styles.container}>
       <Text>Guess Number App</Text>
       <View style={styles.card}>
-        <TextInput style={styles.input} keyboardType="number-pad" />
+        <TextInput
+          style={styles.input}
+          keyboardType="number-pad"
+          maxLength={2}
+        />
         <View style={styles.buttonsContainer}>
           <View style={styles.buttonContainer}>
-            <CustomButton>Clear</CustomButton>
+            <CustomButton onPress={resetHandler}>Clear</CustomButton>
           </View>
           <View style={styles.buttonContainer}>
-            <CustomButton>Verify</CustomButton>
+            <CustomButton onPress={confirmHandler}>Verify</CustomButton>
           </View>
         </View>
       </View>
@@ -50,11 +56,10 @@ const styles = StyleSheet.create({
     fontSize: 35,
     fontWeight: "bold",
   },
-  buttonsContainer:{
-    flexDirection:'row'
+  buttonsContainer: {
+    flexDirection: "row",
   },
-  buttonContainer:{
-    flex:1,
-    
-  }
+  buttonContainer: {
+    flex: 1,
+  },
 });
