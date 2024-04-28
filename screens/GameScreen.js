@@ -3,22 +3,27 @@ import React, { useEffect, useState } from "react";
 import Title from "../components/Title";
 import ComputerNumber from "../components/ComputerNumber";
 import CustomButton from "../components/CustomButton";
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign } from "@expo/vector-icons";
 
 let minNumber = 1;
 let maxNumber = 100;
 
-export default function GameScreen({ userNumber,onGameOver }) {
+export default function GameScreen({ userNumber, onGameOver }) {
   const initialGuess = generateNumber(1, 100, userNumber);
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
+  const [guessCounts, setGuessCounts] = useState([initialGuess]);
 
-  useEffect(()=> {
-    if(currentGuess === userNumber){
-        onGameOver()
+  useEffect(() => {
+    if (currentGuess === userNumber) {
+      onGameOver(guessCounts.length);
     }
+  }, [currentGuess, userNumber, onGameOver]);
 
-  },[currentGuess,userNumber,onGameOver])
-
+  useEffect(() => {
+    minNumber = 1;
+    maxNumber = 100;
+  }, []);
+  
 
   function nextGuessHandler(direction) {
     if (
@@ -40,6 +45,7 @@ export default function GameScreen({ userNumber,onGameOver }) {
     }
     const newRandomNumber = generateNumber(minNumber, maxNumber, currentGuess);
     setCurrentGuess(newRandomNumber);
+    setGuessCounts((prevGuess) => [newRandomNumber, ...prevGuess]);
   }
   function generateNumber(min, max, exclude) {
     const randomNumber = Math.floor(Math.random() * (max - min)) + min;
@@ -58,10 +64,10 @@ export default function GameScreen({ userNumber,onGameOver }) {
         <Text style={styles.title}>Higher or Lower?</Text>
         <View style={styles.buttonsContainer}>
           <CustomButton onPress={nextGuessHandler.bind(this, "lower")}>
-          <AntDesign name="minus" size={24} color="white" />
+            <AntDesign name="minus" size={24} color="white" />
           </CustomButton>
           <CustomButton onPress={nextGuessHandler.bind(this, "greater")}>
-          <AntDesign name="plus" size={24} color="white" />
+            <AntDesign name="plus" size={24} color="white" />
           </CustomButton>
         </View>
       </View>
@@ -75,29 +81,25 @@ const styles = StyleSheet.create({
     padding: 30,
     marginTop: 20,
   },
-  buttonsContainer:{
-    flexDirection:'row',
-   
+  buttonsContainer: {
+    flexDirection: "row",
   },
-  title:{
-    color:'white',
-    fontSize:24,
-    marginBottom:15,    
-
+  title: {
+    color: "white",
+    fontSize: 24,
+    marginBottom: 15,
   },
-  card:{
-    backgroundColor:'orange',
-    padding:16,
-    marginTop:20,
+  card: {
+    backgroundColor: "orange",
+    padding: 16,
+    marginTop: 20,
     elevation: 4,
     shadowColor: "black",
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 6,
     shadowOpacity: 0.25,
-    borderRadius:20,
-    alignItems:'center',
-    justifyContent:'center',
-
+    borderRadius: 20,
+    alignItems: "center",
+    justifyContent: "center",
   },
- 
 });
