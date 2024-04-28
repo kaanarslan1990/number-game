@@ -10,6 +10,11 @@ export default function App() {
   const [gameIsOver, setGameIsOver] = useState(true);
   const [guessCounts, setGuessCounts] = useState(0);
 
+  function startNewGameHandler(){
+    setUserNumber(null);
+    setGuessCounts(0);
+    
+  }
   function sendedNumerhandler(sendedNumber) {
     setUserNumber(sendedNumber);
     setGameIsOver(false);
@@ -26,7 +31,7 @@ export default function App() {
   }
   if (gameIsOver && userNumber) {
     screen = (
-      <GameOverScreen userNumber={userNumber} roundsNumber={guessCounts} />
+      <GameOverScreen userNumber={userNumber} roundsNumber={guessCounts} onStartNewGame={startNewGameHandler} />
     );
   }
   return (

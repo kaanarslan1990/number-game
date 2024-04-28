@@ -3,7 +3,7 @@ import React from "react";
 import Title from "../components/Title";
 import CustomButton from "../components/CustomButton";
 
-export default function GameOverScreen({roundsNumber,userNumber}) {
+export default function GameOverScreen({roundsNumber,userNumber,onStartNewGame}) {
   return (
     <View style={styles.container}>
       <Title>Game over!</Title>
@@ -14,7 +14,7 @@ export default function GameOverScreen({roundsNumber,userNumber}) {
       Number<Text style={styles.countAndNumber}> {userNumber}</Text>  with
         <Text style={styles.countAndNumber}> {roundsNumber}</Text> tries!
       </Text>
-      <CustomButton>New Game</CustomButton>
+      <CustomButton onPress={onStartNewGame}>New Game</CustomButton>
     </View>
   );
 }
