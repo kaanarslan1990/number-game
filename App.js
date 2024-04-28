@@ -12,7 +12,7 @@ export default function App() {
   let screen = <GameStartScreen onSendNumber={sendedNumerhandler} />
   if(userNumber){
     screen = (
-      <GameScreen/>
+      <GameScreen userNumber={userNumber}/>
     )
   }
   return (
