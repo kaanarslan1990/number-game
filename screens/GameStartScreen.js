@@ -1,10 +1,25 @@
-import { StyleSheet, Text, TextInput, View } from "react-native";
-import React from "react";
+import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
+import React, { useState } from "react";
 import CustomButton from "../components/CustomButton";
 
 export default function GameStartScreen({ onPress }) {
-  function resetHandler() {}
-  function confirmHandler() {}
+  const [enteredNumber, setEnteredNumber] = useState("");
+  function resetHandler() {
+    setEnteredNumber("");
+  }
+
+  function confirmHandler() {
+    const chosenNumber = parseInt(enteredNumber);
+    if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
+      Alert.alert("Invalid number!", "Number must be between 1 and 99!", [
+        { text: "Ok", style: "destructive", onPress: resetHandler },
+      ]);
+    }
+  }
+  function numberhandler(text) {
+    console.log(text);
+    setEnteredNumber(text);
+  }
   return (
     <View style={styles.container}>
       <Text>Guess Number App</Text>
@@ -13,6 +28,8 @@ export default function GameStartScreen({ onPress }) {
           style={styles.input}
           keyboardType="number-pad"
           maxLength={2}
+          onChangeText={numberhandler}
+          value={enteredNumber}
         />
         <View style={styles.buttonsContainer}>
           <View style={styles.buttonContainer}>
